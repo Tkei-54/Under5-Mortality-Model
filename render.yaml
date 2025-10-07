@@ -1,1 +1,16 @@
-worker: python bot_app.py
+services:
+  # Define the continuous background worker service
+  - type: worker
+    name: afya-toto-bot
+    env: python
+    # The command to execute after the build is complete
+    buildCommand: pip install -r requirements.txt
+    startCommand: python bot_app.py
+    # Use the free instance type
+    plan: free
+    envVars:
+      - key: TELEGRAM_BOT_TOKEN
+        # The value must be set as a secret in the Render UI
+        # or fetched from a secret file, but setting it in the UI is simpler
+        # for the free tier.
+        sync: false
